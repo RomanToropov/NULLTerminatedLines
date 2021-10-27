@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 #include<Windows.h>
 using namespace std;
 
@@ -20,7 +20,7 @@ void main()
 	//cout << str << endl;
 	const int n = 100;
 	char str[n] = {};
-	cout << "Введите строку: ";
+	cout << "Р’РІРµРґРёС‚Рµ СЃС‚СЂРѕРєСѓ: ";
 	//cin >> str;
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
@@ -52,19 +52,19 @@ int StringLength(char str[])
 		return i;
 }
 
-void to_upper(char str[])//Переводит строку в верхний регистр
+void to_upper(char str[])//РџРµСЂРµРІРѕРґРёС‚ СЃС‚СЂРѕРєСѓ РІ РІРµСЂС…РЅРёР№ СЂРµРіРёСЃС‚СЂ
 {
 	int n = StringLength(str);
 	for (int i = 0; i < n; i++)
 	{
 		if (str[i] >= 'a' && str[i] <= 'z')
 			str[i] -= 32;
-		if (str[i] >= 'а' && str[i] <= 'я')
+		if (str[i] >= 'Р°' && str[i] <= 'СЏ')
 			str[i] -= 32;
 	}
 }
 
-void to_lower(char str[])//Переводит строку в нижний регистр
+void to_lower(char str[])//РџРµСЂРµРІРѕРґРёС‚ СЃС‚СЂРѕРєСѓ РІ РЅРёР¶РЅРёР№ СЂРµРіРёСЃС‚СЂ
 
 {
 	int n = StringLength(str);
@@ -72,12 +72,12 @@ void to_lower(char str[])//Переводит строку в нижний регистр
 	{
 		if (str[i] >= 'A' && str[i] <= 'Z')
 			str[i] += 32;
-		if (str[i] >= 'А' && str[i] <= 'Я')
+		if (str[i] >= 'Рђ' && str[i] <= 'РЇ')
 			str[i] += 32;
 	}
 }
 
-void shrink(char str[])//Удаляет лишние пробелы из предложения
+void shrink(char str[])//РЈРґР°Р»СЏРµС‚ Р»РёС€РЅРёРµ РїСЂРѕР±РµР»С‹ РёР· РїСЂРµРґР»РѕР¶РµРЅРёСЏ
 {
 	int n = StringLength(str);
 	for (int i = 0; i < n; i++)
@@ -91,7 +91,7 @@ void shrink(char str[])//Удаляет лишние пробелы из предложения
 	}
 }
 
-//bool is_palindrome(char str[])//Проверяет, явлвяется ли строка палиндромом
+//bool is_palindrome(char str[])//РџСЂРѕРІРµСЂСЏРµС‚, СЏРІР»РІСЏРµС‚СЃСЏ Р»Рё СЃС‚СЂРѕРєР° РїР°Р»РёРЅРґСЂРѕРјРѕРј
 //{
 	//bool palindrome = 1;
 	//int n = StringLength(str);
