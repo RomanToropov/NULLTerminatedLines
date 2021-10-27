@@ -10,7 +10,7 @@ void to_lower(char str[]);
 
 void shrink(char str[]);
 
-bool is_palindrome(char str[]);
+//bool is_palindrome(char str[]);
 
 void main()
 {
@@ -36,11 +36,12 @@ void main()
 	to_lower(str);
 	cout << str << endl;
 
-	is_palindrome(str);
-	cout << str << endl;
 
 	shrink(str);
 	cout << str << endl;
+
+	//is_palindrome(str);
+	//cout << str << endl;
 }
 int StringLength(char str[])
 {
@@ -90,9 +91,9 @@ void shrink(char str[])//Удаляет лишние пробелы из предложения
 	}
 }
 
-bool is_palindrome(char str[])//Проверяет, явлвяется ли строка палиндромом
-{
-	bool palindrome = 1;
-	int n = StringLength(str);
+//bool is_palindrome(char str[])//Проверяет, явлвяется ли строка палиндромом
+//{
+	//bool palindrome = 1;
+	//int n = StringLength(str);
 	
-}
+//}
