@@ -1,5 +1,5 @@
 ﻿#include<iostream>
-#include<fstream>		//File stream (ôàéëîâûå ïîòîêè)
+#include<fstream>
 using namespace std;
 
 //#define WRITE_TOFILE
@@ -15,20 +15,19 @@ void main()
 	setlocale(LC_ALL, "");
 #ifdef WRITE_TO_FILE
 	//cout << "Hello World" << endl;
-	ofstream fout("file.txt", ios::app); //Ñîçäàåì è îòêðûâàåì ïîòîê
+	ofstream fout("file.txt", ios::app);
 	fout << "Hello World" << endl;
-	fout.close(); //Ïîòîêè îáÿçàòåëüíî íóæíî çàêðûâàòü
+	fout.close();
 	system("more file.txt");
 #endif // WRITE_TO_FILE
 
 #ifdef READ_FROM_FILE
-	ifstream fin; //ñîçäàåì ïîòîê
+	ifstream fin;
 	fin.open("file.txt");
 	const unsigned int SIZE = 1024;
-	char sz_buffer[SIZE]{};//â ýòó ñòðîêó áóäåì ÷èòàòü èç ôàéëà sz_ - String Zero(ñòðîêà çàêàí÷èâàþùàÿñÿ íóëåì) 
-	if (fin.is_open()) // ïðîâåðÿåì, îòêðûò ëè ôàéë
+	char sz_buffer[SIZE]{};
+	if (fin.is_open())
 	{
-		//TODO:åñëè îòêðûò áóäåì ÷èòàòü ôàéë
 		while (!fin.eof())
 		{
 			//eof() - end of file
@@ -43,10 +42,6 @@ void main()
 	}
 	fin.close();
 #endif // READ_FROM_FILE
-
-	//Â ôàéëå 201 RAW.txt ïîìåíÿòü ìåñòàìè ñòîëáèêè ñ ÌÀÑ-àäðåñîì, è IP-àäðåñîì
-	//Èñõîäíûé ôàéë äîëæåí îñòàòüñÿ íåèçìåííûì, ïðîãðàììà äîëæíà ñîçäàòü íîâûé èçìåíåííûé ôàéë
-	//201 ready.txt
 
 #ifdef work201
 	ifstream fin;
@@ -78,8 +73,8 @@ void main()
 	ifstream fin;
 	char OpenFileName[100] = {};
 	char NewFileName[100] = {};
-	cout << "Ââåäèòå èìÿ îòêðûâàåìîãî ôàéëà:"; cin.getline(OpenFileName, 100);
-	cout << "Ââåäèòå èìÿ ñîõðàíÿåìîãî ôàéëà:"; cin.getline(NewFileName, 100);
+	cout << "Введите имя файла:"; cin.getline(OpenFileName, 100);
+	cout << "Введите имя второго файла:"; cin.getline(NewFileName, 100);
 	Proverka(OpenFileName);
 	Proverka(NewFileName);
 	fin.open(OpenFileName);
@@ -103,8 +98,8 @@ void main()
 			{
 				fout << "host 201-" << i << '\n';
 				fout << "{" << '\n';
-				fout << '\t' << "hardware ethernet" << '\t' << sz_mac_buffer << ";" << '\n';
-				fout << '\t' << "fixed-address" << '\t' << '\t' << sz_ip_buffer << ";" << '\n';
+				fout << '\t' << "subnet mask" << '\t' << sz_mac_buffer << ";" << '\n';
+				fout << '\t' << "ip adress" << '\t' << '\t' << sz_ip_buffer << ";" << '\n';
 				fout << "}" << '\n';
 				fout << '\n';
 			}
@@ -112,8 +107,8 @@ void main()
 			{
 				fout << "host 201-" << i << '\n';
 				fout << "#{" << '\n';
-				fout << "#" << '\t' << "hardware ethernet" << '\t' << sz_mac_buffer << ";" << '\n';
-				fout << "#" << '\t' << "fixed-address" << '\t' << '\t' << sz_ip_buffer << ";" << '\n';
+				fout << "#" << '\t' << "subnet mask" << '\t' << sz_mac_buffer << ";" << '\n';
+				fout << "#" << '\t' << "ip adress" << '\t' << '\t' << sz_ip_buffer << ";" << '\n';
 				fout << "#}" << '\n';
 				fout << '\n';
 			}
@@ -157,16 +152,3 @@ void Zamena(char str[])
 		if (str[i] == '-')str[i] = ':';
 	}
 }
-
-
-/*
-	Ðàáîòà ñ ôàéëàìè
-	Ðàáîòà ñ ôàéëïìè â ÿçûêå ñ++ î÷åíü ïîõîæà íà âûâîä íà ýêðàí è ââîä ñ êëàâèàòóðû
-	äëÿ âûâîäà íà ýêðàí ìû èñïîëüçóåì ïîòîê cout à äëÿ ââîäà ñ êëàâèàòóðû ïîòîê cin
-	àíàëîãè÷íî äëÿ âûâîäà èíôîðìàöèè â ôàéë èñïîëüçóåòñÿ ïîòîê fout äëÿ ÷òåíèÿ ôàéëà èñïîëüçóåòñÿ ïîòîê fin
-	cout ÿâëÿåòñÿ îáúýêòîì êëàññà (ostream - ïîòîê âûâîäà) à cin êëàññà (istream - ïîòîê ââîäà)
-	fout ÿâëÿåòñÿ îáúýêòîì êëàññà (ofstream - output file stream(ïîòîê âûâîäà â ôàéë)) à fin êëàññà (ifstream - Input file stream(ïîòîê ââîäà â ôàéë))
-	Åäèíñòâåííûì ðàçëè÷èåì ïîòîêîâ ââîäà âûâîäà ñ êëàâèàòóðû è íà ýêðàí(cin cout) è ïîòîêàìè ââîäà âûâîäà èç ôàéëà â ôàéë ÿâëÿåòñÿ òî ÷òî cin/cout óæå ñóùåñòâóþò à fin/fout íóæíî ñîçäàâàòü íåïîñðåäñòâåííî ïåðåä ÷òåíèåì/çàïèñüþ ôàéëà.
-	Ïîòîêè cin/cout íàõîäÿòñÿ â áèáëèîòåêè iostream
-	Ïîòîêè fin/fout íàõîäÿòñÿ â áèáëèîòåêè fstream
-*/
