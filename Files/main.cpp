@@ -1,13 +1,16 @@
 ﻿#include<iostream>
-#include<fstream>
+#include<fstream>		//File stream (файловые потоки)
 using namespace std;
 
 //#define WRITE_TOFILE
 //#define READ_FROM_FILE
 //#define work201
+#define DZ
 
 int StringLength(char str[]);
+
 void Proverka(char str[]);
+
 void Zamena(char str[]);
 
 void main()
@@ -15,19 +18,20 @@ void main()
 	setlocale(LC_ALL, "");
 #ifdef WRITE_TO_FILE
 	//cout << "Hello World" << endl;
-	ofstream fout("file.txt", ios::app);
+	ofstream fout("file.txt", ios::app); //Создаем и открываем поток
 	fout << "Hello World" << endl;
-	fout.close();
+	fout.close(); //Потоки обязательно нужно закрывать
 	system("more file.txt");
 #endif // WRITE_TO_FILE
 
 #ifdef READ_FROM_FILE
-	ifstream fin;
+	ifstream fin; //создаем поток
 	fin.open("file.txt");
 	const unsigned int SIZE = 1024;
-	char sz_buffer[SIZE]{};
-	if (fin.is_open())
+	char sz_buffer[SIZE]{};//в эту строку будем читать из файла sz_ - String Zero(строка заканчивающаяся нулем) 
+	if (fin.is_open()) // проверяем, открыт ли файл
 	{
+		//TODO:если открыт будем читать файл
 		while (!fin.eof())
 		{
 			//eof() - end of file
@@ -70,15 +74,17 @@ void main()
 	fout.close();
 	fin.close();
 #endif // work201
+
+#ifdef DZ
 	ifstream fin;
-	char OpenFileName[100] = {};
-	char NewFileName[100] = {};
-	cout << "Введите имя файла:"; cin.getline(OpenFileName, 100);
-	cout << "Введите имя второго файла:"; cin.getline(NewFileName, 100);
-	Proverka(OpenFileName);
-	Proverka(NewFileName);
-	fin.open(OpenFileName);
-	ofstream fout(NewFileName);
+	char OpenFile[256] = {};
+	char NewFile[256] = {};
+	cout << "Введите имя исходного файла: "; cin.getline(OpenFile, 100);
+	cout << "Введите имя конечного файла: "; cin.getline(NewFile, 100);
+	Proverka(OpenFile);
+	Proverka(NewFile);
+	fin.open(OpenFile);
+	ofstream fout(NewFile);
 
 	const unsigned int IP_SIZE = 16;
 	const unsigned int MAC_SIZE = 18;
@@ -86,7 +92,6 @@ void main()
 	char sz_mac_buffer[MAC_SIZE]{};
 
 	int i = 1;
-
 	if (fin.is_open())
 	{
 		while (!fin.eof())
@@ -98,8 +103,8 @@ void main()
 			{
 				fout << "host 201-" << i << '\n';
 				fout << "{" << '\n';
-				fout << '\t' << "subnet mask" << '\t' << sz_mac_buffer << ";" << '\n';
-				fout << '\t' << "ip adress" << '\t' << '\t' << sz_ip_buffer << ";" << '\n';
+				fout << '\t' << "hardware ethernet" << '\t' << sz_mac_buffer << ";" << '\n';
+				fout << '\t' << "fixed-address" << '\t' << '\t' << sz_ip_buffer << ";" << '\n';
 				fout << "}" << '\n';
 				fout << '\n';
 			}
@@ -107,8 +112,8 @@ void main()
 			{
 				fout << "host 201-" << i << '\n';
 				fout << "#{" << '\n';
-				fout << "#" << '\t' << "subnet mask" << '\t' << sz_mac_buffer << ";" << '\n';
-				fout << "#" << '\t' << "ip adress" << '\t' << '\t' << sz_ip_buffer << ";" << '\n';
+				fout << "#" << '\t' << "hardware ethernet" << '\t' << sz_mac_buffer << ";" << '\n';
+				fout << "#" << '\t' << "fixed-address" << '\t' << '\t' << sz_ip_buffer << ";" << '\n';
 				fout << "#}" << '\n';
 				fout << '\n';
 			}
@@ -122,7 +127,31 @@ void main()
 
 	fout.close();
 	fin.close();
-	system("notepad");
+
+	char sz_cmd[256] = "notepad ";
+	strcat(sz_cmd, NewFile);
+
+	//strcat(sz_dst,sz_src);//strcat выполняет конкатенацию(слияние) строк
+	//например, "Hello"+"World" = "HelloWorld";
+	//sz_dst - строка получатель, в которую будет сохранен результат конкатенации
+	//Source - исходник, источник.
+	//Destination - пункт назначения, получатель.
+	//sz_src - строка источник, которая будет добавлена к получателю
+
+	// char* extension = strrchr(sz_OpenFileName,'.');
+	// cout <<(extension ? extension : "У файла нет расширения")<<endl;
+	// if(extension == nullptr || strcmp(extension))
+	//char* strchr(char* str, char symbol); - находит указаный символ(symbol) в указаной строке(str) и возвращает указатель на найденный символ. Если указанный символ(symbol) в указанной строке(str) не найден то функция strchr возвращает указатель на ноль(nullptr)
+	//Функция strrchr(char* str) - делает тоже самое но наченая с конца строки
+
+	system(sz_cmd);
+#endif // DZ
+
+	/*const unsigned int SIZE = 256;
+	char sz_filename[SIZE] = {};
+	cout << "Введите имя файла: "; cin.getline(sz_filename, SIZE);
+	ifstream fin(sz_filename);*/
+
 }
 
 int StringLength(char str[])
@@ -152,3 +181,16 @@ void Zamena(char str[])
 		if (str[i] == '-')str[i] = ':';
 	}
 }
+
+
+/*
+	Работа с файлами
+	Работа с файлпми в языке с++ очень похожа на вывод на экран и ввод с клавиатуры
+	для вывода на экран мы используем поток cout а для ввода с клавиатуры поток cin
+	аналогично для вывода информации в файл используется поток fout для чтения файла используется поток fin
+	cout является объэктом класса (ostream - поток вывода) а cin класса (istream - поток ввода)
+	fout является объэктом класса (ofstream - output file stream(поток вывода в файл)) а fin класса (ifstream - Input file stream(поток ввода в файл))
+	Единственным различием потоков ввода вывода с клавиатуры и на экран(cin cout) и потоками ввода вывода из файла в файл является то что cin/cout уже существуют а fin/fout нужно создавать непосредственно перед чтением/записью файла.
+	Потоки cin/cout находятся в библиотеки iostream
+	Потоки fin/fout находятся в библиотеки fstream
+*/
